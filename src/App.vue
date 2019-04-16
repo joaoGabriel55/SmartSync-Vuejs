@@ -1,28 +1,46 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-toolbar app>
+      <v-toolbar-title class="headline font-weight-regular">
+        <span class="font-weight-light">Import CSV file from Agritempo portal</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <router-link to="getContext" style="text-decoration: none;" >
+        <v-btn flat @click="test">{{!isGetContext ? "See Contexts List": "Back"}}</v-btn>
+      </router-link>
+    </v-toolbar>
+
+    <v-content>
+      <ImportCSVFile v-if="!isGetContext"/>
+      <Content v-if="isGetContext"/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ImportCSVFile from "./components/ImportCSVFile";
+import Content from "./components/Content";
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+    // beforeCreate() {
+    //   this.isGetContext = false
+    // },
+    name: "App",
+    components: {
+        ImportCSVFile,
+        Content
+    },
+    data() {
+        return {
+            isGetCSV: false,
+            isGetContext: false
+        };
+    },
+    methods: {
+        test() {
+            this.isGetContext = !this.isGetContext;
+            console.log(this.isGetContext);
+        }
+    }
+};
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
